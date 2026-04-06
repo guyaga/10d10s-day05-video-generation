@@ -68,39 +68,30 @@ One command to install. Then Claude can use it.
 
 ---
 
-## Step 4: Install the fal MCP + Skill
+## Step 4: Install the fal MCP (Run in Terminal — NOT inside Claude Code)
 
-### The Easy Way (Recommended)
-
-Open Claude Code and paste this entire block:
-
-```
-I need to set up AI video generation with fal.ai. Please help me:
-
-1. Install the fal.ai MCP server by running:
-   claude mcp add --transport http fal-ai https://mcp.fal.ai/mcp --header "Authorization: Bearer MY_FAL_KEY"
-   (Replace MY_FAL_KEY with my actual key)
-
-2. Install the skill from https://github.com/guyaga/10d10s-day05-video-generation
-
-3. After setup, verify the MCP is connected by searching for available video models.
-
-fal MCP docs: https://fal.ai/docs/documentation/setting-up/mcp
-My fal API key is: [PASTE YOUR KEY HERE]
-```
-
-### Manual Way
+**Close Claude Code first.** Open a regular terminal (PowerShell, Terminal, Command Prompt) and run:
 
 ```bash
-# 1. Add fal MCP (replace YOUR_KEY)
-claude mcp add --transport http fal-ai https://mcp.fal.ai/mcp --header "Authorization: Bearer YOUR_KEY"
-
-# 2. Clone the skill
-cd ~/.claude/skills/
-git clone https://github.com/guyaga/10d10s-day05-video-generation fal-ai-video-generation
-
-# 3. Restart Claude Code for MCP to load
+claude mcp add --transport http fal-ai https://mcp.fal.ai/mcp --header "Authorization: Bearer YOUR_FAL_KEY"
 ```
+
+Replace `YOUR_FAL_KEY` with your actual API key from Step 2.
+
+> **Why outside Claude Code?** The `claude mcp add` command configures Claude Code itself — it can't configure itself from the inside. Like installing a browser extension — you do it from outside the browser.
+
+---
+
+## Step 5: Restart Claude Code & Install Skill
+
+1. **Close and reopen Claude Code** — the fal MCP loads on startup
+2. Open Claude Code and paste:
+
+```
+Install the fal-ai-video-generation skill from https://github.com/guyaga/10d10s-day04-video-generation and verify the fal MCP is connected by searching for available video models.
+```
+
+If it works, Claude will show you available models like Veo 3.1, Kling 3, etc.
 
 ---
 

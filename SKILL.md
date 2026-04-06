@@ -22,27 +22,31 @@ MCP (Model Context Protocol) is like a plugin for Claude Code. It connects Claud
 
 > **Important:** Video generation costs money per second of output. Start with $5-10 in credits to experiment. See pricing table below.
 
-### Step 2: Install the fal MCP
+### Step 2: Install the fal MCP (Run in Terminal — NOT inside Claude Code)
 
-Open Claude Code and paste this:
+**Close Claude Code first.** Then open a regular terminal (PowerShell, Terminal, or Command Prompt) and run:
 
-```
-Install the fal.ai MCP server for video generation. Here's what to do:
-
-1. Run this command to add the fal MCP:
+```bash
 claude mcp add --transport http fal-ai https://mcp.fal.ai/mcp --header "Authorization: Bearer YOUR_FAL_KEY"
-
-2. Replace YOUR_FAL_KEY with my actual API key from https://fal.ai/dashboard/keys
-
-3. After installing, verify it works by listing available video models.
-
-Documentation: https://fal.ai/docs/documentation/setting-up/mcp
-Skill repo: https://github.com/guyaga/10d10s-day05-video-generation
 ```
 
-### Step 3: Verify Connection
+Replace `YOUR_FAL_KEY` with your actual API key from https://fal.ai/dashboard/keys.
 
-After restart, the fal MCP tools should be available. Claude can now search models, check pricing, and generate videos.
+> **Why outside Claude Code?** The `claude mcp add` command configures Claude Code itself — it can't configure itself from inside. Think of it like installing a browser extension — you install it from outside the browser.
+
+### Step 3: Restart Claude Code
+
+Close and reopen Claude Code. The fal MCP will load automatically on startup. You should see new fal tools available.
+
+### Step 4: Verify & Install Skill
+
+Now open Claude Code and paste:
+
+```
+Install the fal-ai-video-generation skill from https://github.com/guyaga/10d10s-day04-video-generation and verify the fal MCP is connected by searching for available video models.
+```
+
+If the MCP is working, Claude will be able to search models, check pricing, and generate videos.
 
 ---
 
