@@ -47,66 +47,76 @@ One command to install. Then Claude can use it.
 
 ---
 
-## Step 1: Create a fal.ai Account
+## Before You Start — Get Your fal.ai API Key
 
-1. Go to [fal.ai](https://fal.ai) and sign up
+Do this first, before running any commands.
 
----
-
-## Step 2: Get Your API Key
-
-1. Go to **https://fal.ai/dashboard/keys**
-2. Click **Create Key**
-3. Copy the key (looks like `xxxx-xxxx:xxxxxxxxxxxx`)
+1. **Sign up** at [fal.ai](https://fal.ai)
+2. **Add credits** at https://fal.ai/dashboard/usage-billing/credits ($5-10 to start — enough for 20-50 short test videos)
+3. **Create an API key** at https://fal.ai/dashboard/keys → click **Create Key**
+4. **Copy the key** (looks like `xxxx-xxxx:xxxxxxxxxxxx`) and save it somewhere safe — you will paste it into Phase 1 below
 
 ---
 
-## Step 3: Add Credits
+## Phase 1: Add the fal MCP Server
 
-1. Go to **https://fal.ai/dashboard/usage-billing/credits**
-2. Add $5-10 to start (enough for ~20-50 test videos)
-
----
-
-## Step 4: Add the fal MCP Server
-
-Run this command in **EITHER** of two places — both work for first-time install:
+Run this command in **EITHER**:
 
 - **(a)** A regular terminal (PowerShell, Terminal, Command Prompt), **OR**
-- **(b)** A **brand-new fresh conversation in Antigravity** — paste it as your first message and Claude will execute it as a shell command
+- **(b)** A **fresh new conversation in Antigravity** — paste it as your first message and Claude will run it for you (approve if prompted)
 
 ```bash
 claude mcp add --transport http fal-ai https://mcp.fal.ai/mcp --header "Authorization: Bearer YOUR_FAL_KEY"
 ```
 
-Replace `YOUR_FAL_KEY` with your actual API key from Step 2.
+Replace `YOUR_FAL_KEY` with the key you saved in the prerequisite step.
 
-> **Why both work:** The command writes to Claude Code's config file. As long as it runs *before* the conversation that needs the MCP, it works — so a fresh Antigravity conversation is fine for first-time setup.
-
----
-
-## Step 5: Open a NEW Conversation & Verify
-
-After the install is approved, **open a new conversation** in Claude Code / Antigravity. Then:
-
-1. Type `/` to open the slash-command menu
-2. Scroll to the **MCP servers** option
-3. Confirm **`fal-ai`** appears in the list
-
-- ✅ Listed → you're good, move to Step 6
-- ❌ Not listed → re-check your `YOUR_FAL_KEY`, re-run Step 4, then start another new conversation and check again
+You should see a success message like `Added MCP server fal-ai`.
 
 ---
 
-## Step 6: Install the Skill
+## Phase 2: Verify the MCP Is Connected
 
-In the same new conversation, paste:
+Open a **NEW conversation** in Claude Code or Antigravity.
+
+> ⚠️ Even if you used Antigravity for Phase 1, you must open **another** new conversation now — Claude only loads MCP servers when a conversation starts, so the conversation that ran the install command won't see the new MCP yet.
+
+In the new conversation, type:
+
+```
+/mcp
+```
+
+You should see **`fal-ai`** in the list of connected MCP servers.
+
+**If it does NOT appear:**
+- From a terminal, run `claude mcp list` — `fal-ai` should be in the output
+- Check the config file at `~/.claude.json` (Mac/Linux) or `%USERPROFILE%\.claude.json` (Windows)
+- Most common cause: typo in API key — re-run Phase 1
+
+---
+
+## Phase 3: Install the Skill
+
+In the same conversation where `/mcp` showed `fal-ai`, paste this prompt:
 
 ```
 Install the fal-ai-video-generation skill from https://github.com/guyaga/10d10s-day04-video-generation and verify the fal MCP is connected by searching for available video models.
 ```
 
-If it works, Claude will show you available models like Veo 3.1, Kling 3, etc.
+Claude will clone the skill into `~/.claude/skills/` and run a model search through the fal MCP. You should see Veo 3.1, Kling 3, Seedance, LTX, and others.
+
+---
+
+## Phase 4: Generate Your First Video
+
+Start with a **cheap model** (LTX or Kling 2.5) to dial in your prompt, then upgrade to premium models (Veo 3.1, Kling 3 Pro) once it looks right. Try this:
+
+```
+Generate a 5-second test video using LTX Video: A slow aerial drone shot over a futuristic city at sunset, neon lights reflecting on glass buildings, cinematic. Save to D:/Videos/test1.mp4
+```
+
+Cost: ~$0.10. If you like the result, regenerate with Veo 3.1 or Kling 3 Pro for higher quality.
 
 ---
 
